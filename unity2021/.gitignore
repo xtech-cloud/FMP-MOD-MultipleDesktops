@@ -1,0 +1,19 @@
+
+/_dist_/
+/_build_/
+/MultipleDesktops/Assets/TextMesh Pro/
+/MultipleDesktops/Assets/TextMesh Pro.meta
+/MultipleDesktops/Assets/Plugins/
+/MultipleDesktops/Assets/Plugins.meta
+/MultipleDesktops/Assets/3rd/
+/MultipleDesktops/Assets/3rd.meta
+/MultipleDesktops/Library/
+/MultipleDesktops/obj/
+/MultipleDesktops/Logs/
+/MultipleDesktops/Temp/
+/MultipleDesktops/UserSettings/
+/MultipleDesktops/*.sln
+/MultipleDesktops/*.csproj
+/MultipleDesktops/.vsconfig
+/MultipleDesktops/.vs/
+/.UNITY_HOME.env

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyConfig version="1.0">
+  <!-- UI 
+      visible: 预加载完成后是否显示
+      slot: ui根节点在主Canvas中的挂载路径
+    -->
+  <UI visible="true" slot="[root]"/>
+  <!-- World
+      visible: 预加载完成后是否显示
+      slot: world根节点的挂载路径
+    -->
+  <World visible="true" slot="[root]"/>
+  <!-- 远程过程调用
+      address: 地址
+    -->
+  <GRPC address="https://localhost:19000"/>
+  <!-- 样式列表
+      name: 名称
+      color: 底色
+      BackButton.image: 返回按钮的图片
+      BackButton.anchor: 返回按钮的锚点
+      BackButton.SubjectS: 返回按钮按下后发布的订阅主题列表
+    -->
+  <Styles>
+    <Style name="center" color="#333333FF">
+    </Style>
+    <Style name="left" color="#FF0000FF">
+      <BackButton image="btnBack.png">
+        <Anchor horizontal="left" vertical="center" width="86" height="48"/>
+        <SubjectS>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="center" type="string"/>
+              <Parameter key="animation" value="pull_center_from_right" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="left" type="string"/>
+              <Parameter key="animation" value="push_center_to_left" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+        </SubjectS>
+      </BackButton>
+    </Style>
+    <Style name="right" color="#00FF00FF">
+      <BackButton image="btnBack.png">
+        <Anchor horizontal="left" vertical="center" width="86" height="48"/>
+        <SubjectS>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="center" type="string"/>
+              <Parameter key="animation" value="pull_center_from_left" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="right" type="string"/>
+              <Parameter key="animation" value="push_center_to_right" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+        </SubjectS>
+      </BackButton>
+    </Style>
+    <Style name="top" color="#0000FFFF">
+      <BackButton image="btnBack.png">
+        <Anchor horizontal="left" vertical="center" width="86" height="48"/>
+        <SubjectS>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="center" type="string"/>
+              <Parameter key="animation" value="pull_center_from_bottom" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="top" type="string"/>
+              <Parameter key="animation" value="push_center_to_top" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+        </SubjectS>
+      </BackButton>
+    </Style>
+    <Style name="bottom" color="#FF00FFFF">
+      <BackButton image="btnBack.png">
+        <Anchor horizontal="left" vertical="center" width="86" height="48"/>
+        <SubjectS>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="center" type="string"/>
+              <Parameter key="animation" value="pull_center_from_top" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+          <Subject message="/XTC/MultipleDesktops/Switch">
+            <Parameters>
+              <Parameter key="uid" value="bottom" type="string"/>
+              <Parameter key="animation" value="push_center_to_bottom" type="string"/>
+              <Parameter key="duration" value="1" type="float"/>
+            </Parameters>
+          </Subject>
+        </SubjectS>
+      </BackButton>
+    </Style>
+  </Styles>
+  <!-- 预创建的实例列表
+      uid: 实例的唯一ID
+      style: 使用的样式名
+      uiRoot: UI挂载的根节点（需可见），空值时等于UI.slot
+      uiSlot: UI在uiRoot下的挂载路径
+      worldRoot: World挂载的根节点（需可见），空值时等于World.slot
+      worldSlot: World在worldRoot下的路径
+    -->
+  <Instances>
+    <Instance uid="center" style="center" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
+    <Instance uid="left" style="left" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
+    <Instance uid="right" style="right" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
+    <Instance uid="top" style="top" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
+    <Instance uid="bottom" style="bottom" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
+  </Instances>
+  <!-- 预加载 -->
+  <Preload>
+    <!-- 消息订阅的主题
+          message: 消息
+          Parameter.key: 参数的键
+          Parameter.value: 参数的值
+          Parameter.type: 参数的类型，支持的类型为string,int,float,bool
+        -->
+    <Subjects>
+      <Subject message="/XTC/MultipleDesktops/Open">
+        <Parameters>
+          <Parameter key="uid" value="center" type="string"/>
+          <Parameter key="source" value="" type="string"/>
+          <Parameter key="uri" value="" type="string"/>
+          <Parameter key="delay" value="0" type="float"/>
+        </Parameters>
+      </Subject>
+    </Subjects>
+  </Preload>
+</MyConfig>
