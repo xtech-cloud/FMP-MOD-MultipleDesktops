@@ -20,6 +20,8 @@
       BackButton.image: 返回按钮的图片
       BackButton.anchor: 返回按钮的锚点
       BackButton.SubjectS: 返回按钮按下后发布的订阅主题列表
+      Splash: 过场，仅在切换过程显示，切换完成后消失
+      Splash.image: 过场图片
     -->
   <Styles>
     <Style name="center" color="#333333FF">
@@ -44,6 +46,7 @@
           </Subject>
         </SubjectS>
       </BackButton>
+      <Splash image="splash.jpg"/>
     </Style>
     <Style name="right" color="#00FF00FF">
       <BackButton image="btnBack.png">
