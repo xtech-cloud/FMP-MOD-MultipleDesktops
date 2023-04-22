@@ -244,7 +244,6 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
 
         private void onComplete(GameObject _target)
         {
-            _target.transform.Find("mask").gameObject.SetActive(false);
         }
     }
 }
