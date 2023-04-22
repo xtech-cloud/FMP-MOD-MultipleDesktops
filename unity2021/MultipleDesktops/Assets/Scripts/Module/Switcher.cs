@@ -13,7 +13,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
     {
         public LibMVCS.Logger logger { get; set; }
 
-        private Dictionary<string, Action<GameObject, float>> handlerS_ = new Dictionary<string, Action<GameObject, float>>();
+        private Dictionary<string, Action<GameObject, float, Action>> handlerS_ = new Dictionary<string, Action<GameObject, float, Action>>();
         private TweenerCore<Vector2, Vector2, VectorOptions> tween_ = null;
 
         public Switcher()
@@ -34,20 +34,21 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
         /// <param name="_target">目标对象</param>
         /// <param name="_animation">预设动画名</param>
         /// <param name="_duration">持续时间</param>
+        /// <param name="_onFinish">完成的回调</param>
 
-        public void Do(GameObject _target, string _animation, float _duration)
+        public void Do(GameObject _target, string _animation, float _duration, Action _onFinish)
         {
-            Action<GameObject, float> handler;
+            Action<GameObject, float, Action> handler;
             if (!handlerS_.TryGetValue(_animation, out handler))
             {
                 logger.Error("handler of animation:{0} not found", _animation);
                 return;
             }
 
-            handler(_target, _duration);
+            handler(_target, _duration, _onFinish);
         }
 
-        private void pushCenterToLeft(GameObject _target, float _duration)
+        private void pushCenterToLeft(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -67,10 +68,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rtTarget.anchoredPosition = to;
                 _target.SetActive(false);
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pushCenterToRight(GameObject _target, float _duration)
+        private void pushCenterToRight(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -90,10 +92,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rtTarget.anchoredPosition = to;
                 _target.SetActive(false);
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pushCenterToTop(GameObject _target, float _duration)
+        private void pushCenterToTop(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -113,10 +116,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rtTarget.anchoredPosition = to;
                 _target.SetActive(false);
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pushCenterToBottom(GameObject _target, float _duration)
+        private void pushCenterToBottom(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -136,10 +140,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rtTarget.anchoredPosition = to;
                 _target.SetActive(false);
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pullCenterFromLeft(GameObject _target, float _duration)
+        private void pullCenterFromLeft(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -159,10 +164,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rtTarget.anchoredPosition = to;
                 _target.SetActive(true);
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pullCenterFromRight(GameObject _target, float _duration)
+        private void pullCenterFromRight(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -181,10 +187,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 onComplete(_target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pullCenterFromTop(GameObject _target, float _duration)
+        private void pullCenterFromTop(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -203,10 +210,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 onComplete(_target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
+                _onFinish();
             });
         }
 
-        private void pullCenterFromBottom(GameObject _target, float _duration)
+        private void pullCenterFromBottom(GameObject _target, float _duration, Action _onFinish)
         {
             if (null != tween_)
             {
@@ -225,6 +233,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 onComplete(_target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
+                _onFinish();
             });
         }
 

@@ -18,7 +18,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
         public class UiReference
         {
             public Button btnBack;
-
+            public RawImage imgSplash;
         }
 
         private UiReference uiReference_ = new UiReference();
@@ -52,7 +52,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 rawImage.color = color;
             }
 
-            rootUI.transform.Find("mask").gameObject.SetActive(false);
+            uiReference_.imgSplash = rootUI.transform.Find("imgSplash").GetComponent<RawImage>();
             uiReference_.btnBack = rootUI.transform.Find("btnBack").GetComponent<Button>();
             uiReference_.btnBack.gameObject.SetActive(false);
             if (null != style_.backButton)
@@ -68,6 +68,14 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 loadTextureFromTheme(style_.backButton.image, (_texture) =>
                 {
                     uiReference_.btnBack.GetComponent<RawImage>().texture = _texture;
+                }, () => { });
+            }
+            uiReference_.imgSplash.gameObject.SetActive(style_.splash != null);
+            if (null != style_.splash)
+            {
+                loadTextureFromTheme(style_.splash.image, (_texture) =>
+                {
+                    uiReference_.imgSplash.texture = _texture;
                 }, () => { });
             }
         }
@@ -107,7 +115,17 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
         /// <param name="_duration">持续时间</param>
         public void DoSwitch(string _animation, float _duration)
         {
-            switcher_.Do(rootUI, _animation, _duration);
+            if (null != style_.splash)
+            {
+                uiReference_.imgSplash.gameObject.SetActive(true);
+            }
+            switcher_.Do(rootUI, _animation, _duration, () =>
+            {
+                if (null != style_.splash)
+                {
+                    uiReference_.imgSplash.gameObject.SetActive(false);
+                }
+            });
         }
     }
 }

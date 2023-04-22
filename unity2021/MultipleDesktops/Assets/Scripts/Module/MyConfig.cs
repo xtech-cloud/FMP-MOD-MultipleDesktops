@@ -8,6 +8,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
     /// </summary>
     public class MyConfig : MyConfigBase
     {
+        public class Splash
+        {
+            [XmlAttribute("image")]
+            public string image { get; set; } = "";
+        }
         public class BackButton : UiElement
         {
             [XmlArray("SubjectS"), XmlArrayItem("Subject")]
@@ -22,6 +27,8 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             public string color { get; set; } = "#00000000";
             [XmlElement("BackButton")]
             public BackButton backButton { get; set; } = null;
+            [XmlElement("Splash")]
+            public Splash splash { get; set; } = null;
         }
 
 
