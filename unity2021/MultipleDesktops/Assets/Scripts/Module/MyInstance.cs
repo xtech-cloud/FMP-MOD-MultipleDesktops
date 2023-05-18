@@ -127,11 +127,11 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             {
                 uiReference_.imgSplash.gameObject.SetActive(true);
             }
-            switcher_.Do(rootUI, _animation, _duration, () =>
+            switcher_.Do(rootUI, _animation, _duration, _visible, () =>
             {
                 if (null != style_.splash)
                 {
-                    uiReference_.imgSplash.gameObject.SetActive(_visible);
+                    uiReference_.imgSplash.gameObject.SetActive(false);
                 }
             });
         }

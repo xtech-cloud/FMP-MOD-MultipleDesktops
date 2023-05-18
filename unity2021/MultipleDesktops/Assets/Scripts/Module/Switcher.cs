@@ -13,7 +13,15 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
     {
         public LibMVCS.Logger logger { get; set; }
 
-        private Dictionary<string, Action<GameObject, float, Action>> handlerS_ = new Dictionary<string, Action<GameObject, float, Action>>();
+        private class Options
+        {
+            public GameObject target;
+            public float duration;
+            public bool visible;
+            public Action onFinish;
+        }
+
+        private Dictionary<string, Action<Options>> handlerS_ = new Dictionary<string, Action<Options>>();
         private TweenerCore<Vector2, Vector2, VectorOptions> tween_ = null;
 
         public Switcher()
@@ -31,209 +39,214 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
         /// <summary>
         /// 执行
         /// </summary>
-        /// <param name="_target">目标对象</param>
+        /// <param name="_options.target">目标对象</param>
         /// <param name="_animation">预设动画名</param>
-        /// <param name="_duration">持续时间</param>
-        /// <param name="_onFinish">完成的回调</param>
+        /// <param name="_options.duration">持续时间</param>
+        /// <param name="_visible">完成后是否可见</param>
+        /// <param name="_options.onFinish">完成的回调</param>
 
-        public void Do(GameObject _target, string _animation, float _duration, Action _onFinish)
+        public void Do(GameObject _target, string _animation, float _duration, bool _visible, Action _onFinish)
         {
-            Action<GameObject, float, Action> handler;
+            Action<Options> handler;
             if (!handlerS_.TryGetValue(_animation, out handler))
             {
                 logger.Error("handler of animation:{0} not found", _animation);
                 return;
             }
 
-            handler(_target, _duration, _onFinish);
+            Options options = new Options();
+            options.target = _target;
+            options.duration = _duration;
+            options.visible = _visible;
+            options.onFinish = _onFinish;
+            handler(options);
         }
 
-        private void pushCenterToLeft(GameObject _target, float _duration, Action _onFinish)
+        private void pushCenterToLeft(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = Vector2.zero;
             var to = new Vector2(-rtTarget.rect.width, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
-                _target.SetActive(false);
+                _options.target.SetActive(_options.visible);
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pushCenterToRight(GameObject _target, float _duration, Action _onFinish)
+        private void pushCenterToRight(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = Vector2.zero;
             var to = new Vector2(rtTarget.rect.width, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
-                _target.SetActive(false);
+                _options.target.SetActive(_options.visible);
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pushCenterToTop(GameObject _target, float _duration, Action _onFinish)
+        private void pushCenterToTop(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = Vector2.zero;
             var to = new Vector2(0, rtTarget.rect.height);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
-                _target.SetActive(false);
+                _options.target.SetActive(_options.visible);
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pushCenterToBottom(GameObject _target, float _duration, Action _onFinish)
+        private void pushCenterToBottom(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = Vector2.zero;
             var to = new Vector2(0, -rtTarget.rect.height);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
-                _target.SetActive(false);
+                _options.target.SetActive(_options.visible);
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pullCenterFromLeft(GameObject _target, float _duration, Action _onFinish)
+        private void pullCenterFromLeft(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = new Vector2(-rtTarget.rect.width, 0);
             var to = new Vector2(0, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
-                _target.SetActive(true);
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pullCenterFromRight(GameObject _target, float _duration, Action _onFinish)
+        private void pullCenterFromRight(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = new Vector2(rtTarget.rect.width, 0);
             var to = new Vector2(0, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pullCenterFromTop(GameObject _target, float _duration, Action _onFinish)
+        private void pullCenterFromTop(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = new Vector2(0, rtTarget.rect.height);
             var to = new Vector2(0, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 
-        private void pullCenterFromBottom(GameObject _target, float _duration, Action _onFinish)
+        private void pullCenterFromBottom(Options _options)
         {
             if (null != tween_)
             {
                 tween_.Kill();
             }
-            var rtTarget = _target.GetComponent<RectTransform>();
+            var rtTarget = _options.target.GetComponent<RectTransform>();
             var from = new Vector2(0, -rtTarget.rect.height);
             var to = new Vector2(0, 0);
             rtTarget.anchoredPosition = from;
-            _target.SetActive(true);
-            tween_ = rtTarget.DOAnchorPos(to, _duration).OnStart(() =>
+            _options.target.SetActive(true);
+            tween_ = rtTarget.DOAnchorPos(to, _options.duration).OnStart(() =>
             {
-                onStart(_target);
+                onStart(_options.target);
             }).OnComplete(() =>
             {
-                onComplete(_target);
+                onComplete(_options.target);
                 rtTarget.anchoredPosition = to;
                 tween_ = null;
-                _onFinish();
+                _options.onFinish();
             });
         }
 

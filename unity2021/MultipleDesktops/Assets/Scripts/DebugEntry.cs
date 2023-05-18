@@ -119,6 +119,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             data["uid"] = _uid;
             data["animation"] = _animation;
             data["duration"] = 1f;
+            //data["visible"] = true;
             modelDummy_.Publish(MySubject.Switch, data);
         }
     }
