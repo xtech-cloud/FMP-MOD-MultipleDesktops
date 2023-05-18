@@ -51,6 +51,13 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             {
                 rawImage.color = color;
             }
+            if (!string.IsNullOrEmpty(style_.background))
+            {
+                loadTextureFromTheme(style_.background, (_texture) =>
+                {
+                    rawImage.texture = _texture;
+                }, () => { });
+            }
 
             uiReference_.imgSplash = rootUI.transform.Find("imgSplash").GetComponent<RawImage>();
             uiReference_.btnBack = rootUI.transform.Find("btnBack").GetComponent<Button>();

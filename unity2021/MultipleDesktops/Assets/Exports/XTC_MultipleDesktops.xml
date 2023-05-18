@@ -17,6 +17,7 @@
   <!-- 样式列表
       name: 名称
       color: 底色
+      background: 背景图
       BackButton.image: 返回按钮的图片
       BackButton.anchor: 返回按钮的锚点
       BackButton.SubjectS: 返回按钮按下后发布的订阅主题列表
@@ -24,7 +25,7 @@
       Splash.image: 过场图片
     -->
   <Styles>
-    <Style name="center" color="#333333FF">
+    <Style name="center" color="#FFFFFFFF" background="bg.png">
     </Style>
     <Style name="left" color="#FF0000FF">
       <BackButton image="btnBack.png">

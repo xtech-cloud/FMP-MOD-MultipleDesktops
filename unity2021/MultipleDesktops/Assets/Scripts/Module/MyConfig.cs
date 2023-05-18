@@ -25,6 +25,8 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             public string name { get; set; } = "";
             [XmlAttribute("color")]
             public string color { get; set; } = "#00000000";
+            [XmlAttribute("background")]
+            public string background { get; set; } = "";
             [XmlElement("BackButton")]
             public BackButton backButton { get; set; } = null;
             [XmlElement("Splash")]
