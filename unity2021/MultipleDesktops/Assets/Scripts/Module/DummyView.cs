@@ -30,12 +30,16 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             string uid = "";
             string animation = "";
             float duration = 1f;
+            bool visible = false;
             try
             {
                 Dictionary<string, object> data = _data as Dictionary<string, object>;
                 uid = data["uid"] as string;
                 animation = data["animation"] as string;
                 duration = (float)data["duration"];
+                object objVisible;
+                if (data.TryGetValue("visible", out objVisible))
+                    visible = (bool)objVisible;
             }
             catch (Exception e)
             {
@@ -50,7 +54,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
                 return;
             }
 
-            instance.DoSwitch(animation, duration);
+            instance.DoSwitch(animation, duration, visible);
         }
     }
 }

@@ -120,7 +120,8 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
         /// </summary>
         /// <param name="_animation">预设动画名</param>
         /// <param name="_duration">持续时间</param>
-        public void DoSwitch(string _animation, float _duration)
+        /// <param name="_visible">切换完成后的可见性</param>
+        public void DoSwitch(string _animation, float _duration, bool _visible)
         {
             if (null != style_.splash)
             {
@@ -130,7 +131,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             {
                 if (null != style_.splash)
                 {
-                    uiReference_.imgSplash.gameObject.SetActive(false);
+                    uiReference_.imgSplash.gameObject.SetActive(_visible);
                 }
             });
         }
