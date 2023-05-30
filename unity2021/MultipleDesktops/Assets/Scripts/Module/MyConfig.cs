@@ -27,6 +27,8 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             public string color { get; set; } = "#00000000";
             [XmlAttribute("background")]
             public string background { get; set; } = "";
+            [XmlAttribute("penetrable")]
+            public bool penetrable { get; set; } = false;
             [XmlElement("BackButton")]
             public BackButton backButton { get; set; } = null;
             [XmlElement("Splash")]
