@@ -46,6 +46,7 @@ namespace XTC.FMP.MOD.MultipleDesktops.LIB.Unity
             }
 
             var rawImage = rootUI.AddComponent<RawImage>();
+            rawImage.raycastTarget = !style_.penetrable;
             Color color = Color.black;
             if (ColorUtility.TryParseHtmlString(style_.color, out color))
             {
